@@ -90,7 +90,7 @@ var view = {
     $("#upload").replaceWith($("#upload").clone());
     $("#file").attr("src", "#");
     $("#file").css("display", "none");
-  },p
+  },
   addTweet: function(tweetNumber, tweetText, imageSrc) {
     tweet = 
     $("tbody").prepend("<tr id='" + tweetNumber + "'> <td>\
