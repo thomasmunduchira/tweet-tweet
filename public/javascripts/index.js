@@ -33,7 +33,7 @@ var tweetList = {
         var tweetText = tweet.tweetText;
         var imageSrc = tweet.imageSrc;
         view.addTweet(tweetId, tweetText, imageSrc);
-      });    
+      });   
     });
   },
   addTweet: function(tweetText, imageSrc) {
