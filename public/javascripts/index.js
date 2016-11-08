@@ -2,14 +2,17 @@ var inSize = true;
 
 $(document).ready(function() {
   controllers.displayAllTweets();
+  controllers.updateLength();
   $("form").on("change", "#upload", function() {
     controllers.readFile(this);
   });
-  $("#message").on("keydown", function() {
+  $("#message").on("keydown", function(event) {
     if (event.keyCode === 13 && inSize) {
       event.preventDefault();
       controllers.addTweet();
     }
+  });  
+  $("#message").on("keyup", function(event) {
     controllers.updateLength();
   });
   $("#submit-button").on("click", function() {
@@ -33,7 +36,8 @@ var tweetList = {
         var tweetText = tweet.tweetText;
         var imageSrc = tweet.imageSrc;
         view.addTweet(tweetId, tweetText, imageSrc);
-      });   
+      });
+      view.resetFocus();
     });
   },
   addTweet: function(tweetText, imageSrc) {
@@ -45,6 +49,7 @@ var tweetList = {
       },
     }).done(function(tweetId) {
       view.addTweet(tweetId, tweetText, imageSrc);
+      view.resetFocus();
     });
   },
   deleteTweet: function(tweetId) {
@@ -73,16 +78,20 @@ var controllers = {
   updateLength: function() {
     var remainingCharacters = 140 - $("#message").val().length;
     $("#length").html(remainingCharacters);
+    var textColor = "black";
+    var isDisabled = false;
     if (remainingCharacters === 140) {
       inSize = false;
-      $("#characters").css("color", "black");      
+      isDisabled = true;
     } else if (remainingCharacters < 0) {
       inSize = false;
-      $("#characters").css("color", "red");
+      textColor = "red";
+      isDisabled = true;
     } else {
       inSize = true;
-      $("#characters").css("color", "black");
     }
+    $("#characters").css("color", textColor);
+    $("#submit-button").prop("disabled", isDisabled);   
   },
   displayAllTweets:function() {
     tweetList.getAllTweets();
@@ -100,6 +109,9 @@ var controllers = {
 };
 
 var view = {
+  resetFocus: function() {
+    $("#message").focus();
+  },
   resetMessage: function() {
     $("#message").val("");
   },
