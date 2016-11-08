@@ -1,6 +1,7 @@
 var inSize = true;
 
 $(document).ready(function() {
+  controllers.displayAllTweets();
   $("form").on("change", "#upload", function() {
     controllers.readFile(this);
   });
@@ -23,6 +24,18 @@ $(document).ready(function() {
 });
 
 var tweetList = {
+  getAllTweets: function() {
+    $.get({
+      url: '/allTweets'
+    }).done(function(tweets) {
+      tweets.forEach(function(tweet) {
+        var tweetId = tweet._id;
+        var tweetText = tweet.tweetText;
+        var imageSrc = tweet.imageSrc;
+        view.addTweet(tweetId, tweetText, imageSrc);
+      });    
+    });
+  },
   addTweet: function(tweetText, imageSrc) {
     $.post({
       url: '/addTweet',
@@ -70,6 +83,9 @@ var controllers = {
       inSize = true;
       $("#characters").css("color", "black");
     }
+  },
+  displayAllTweets:function() {
+    tweetList.getAllTweets();
   },
   addTweet: function() {
     var tweetText = $("#message").val();
