@@ -17,12 +17,11 @@ router.post('/addTweet', function(req, res) {
     tweetText: req.body.tweetText,
     imageSrc: req.body.imageSrc
   });
-  tweet.save(function(err, savedTweet) {
+  tweet.save(function(err) {
     if (err) {
       return console.error(err);
-    } else {
-      res.send(tweet._id);
     }
+    res.send(tweet._id);
   });
 });
 
@@ -33,8 +32,16 @@ router.post('/deleteTweet', function(req, res) {
     if (err) {
       return console.error(err);
     }
-    console.log("Deleted");
     res.send("Deleted");
+  });
+});
+
+router.get('/allTweets', function(req, res) {
+  Tweet.find(function(err, tweets) {
+    if (err) {
+      return console.error(err);
+    }
+    res.send(tweets);
   });
 });
 
