@@ -6,8 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var hbs = require('hbs');
-var mongoose = require('mongoose');
 var routes = require('./routes/routes');
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 var app = express();
 

@@ -1,11 +1,10 @@
 var inSize = true;
-var currentTweetNumber = 0;
 
 $(document).ready(function() {
   $("form").on("change", "#upload", function() {
     controllers.readFile(this);
   });
-  $("#message").on("keyup", function() {
+  $("#message").on("keydown", function() {
     if (event.keyCode === 13 && inSize) {
       event.preventDefault();
       controllers.addTweet();
@@ -24,21 +23,26 @@ $(document).ready(function() {
 });
 
 var tweetList = {
-  tweets: [],
-  addTweet: function(tweetNumber, tweetText, imageSrc) {
-    this.tweets.push({
-      tweetNumber: tweetNumber,
-      tweetText: tweetText,
-      imageSrc: imageSrc
+  addTweet: function(tweetText, imageSrc) {
+    $.post({
+      url: '/addTweet',
+      data: {
+        tweetText: tweetText, 
+        imageSrc: imageSrc
+      },
+    }).done(function(tweetId) {
+      view.addTweet(tweetId, tweetText, imageSrc);
     });
   },
-  deleteTweet: function(tweetNumber) {
-    for (var i = 0; i < this.tweets.length; i++) {
-      tweet = this.tweets[i];
-      if (tweet.tweetNumber === tweetNumber) {
-        this.tweets.splice(i, 1);
+  deleteTweet: function(tweetId) {
+    $.post({
+      url: '/deleteTweet',
+      data: {
+        tweetId: tweetId
       }
-    }
+    }).done(function() {
+      view.deleteTweet(tweetId);
+    });
   }
 };
 
@@ -68,17 +72,14 @@ var controllers = {
     }
   },
   addTweet: function() {
-    currentTweetNumber++;
     var tweetText = $("#message").val();
     var imageSrc = $("#file").attr("src");
-    tweetList.addTweet(currentTweetNumber, tweetText, imageSrc);
-    view.addTweet(currentTweetNumber, tweetText, imageSrc);
+    tweetList.addTweet(tweetText, imageSrc);
     view.resetMessage();
     view.resetFile();
   },
-  deleteTweet: function(tweetNumber) {
-    tweetList.deleteTweet(tweetNumber);
-    view.deleteTweet(tweetNumber);
+  deleteTweet: function(tweetId) {
+    tweetList.deleteTweet(tweetId);
   }
 };
 
@@ -91,19 +92,18 @@ var view = {
     $("#file").attr("src", "#");
     $("#file").css("display", "none");
   },
-  addTweet: function(tweetNumber, tweetText, imageSrc) {
-    tweet = 
-    $("tbody").prepend("<tr id='" + tweetNumber + "'> <td>\
+  addTweet: function(tweetId, tweetText, imageSrc) {
+    $("tbody").prepend("<tr id='" + tweetId + "'> <td>\
       <div class='col-md-10'>\
-      <img src='" + imageSrc + "' id='image" + tweetNumber + "'>" + 
+      <img src='" + imageSrc + "' id='image" + tweetId + "'>" + 
       tweetText + "</div> <div class='col-md-2'>\
-      <button type='button' class='delete-button btn btn-danger' id=" + tweetNumber + ">Delete</button>\
+      <button type='button' class='delete-button btn btn-danger' id=" + tweetId + ">Delete</button>\
       </td> </tr>");
-    if ($("#image" + tweetNumber).attr("src") != "#") {
-      $("#image" + tweetNumber).css("display", "block");
+    if ($("#image" + tweetId).attr("src") != "#") {
+      $("#image" + tweetId).css("display", "block");
     }
   },
-  deleteTweet: function(tweetNumber) {
-    $("tr[id=" + tweetNumber + "]").empty();
+  deleteTweet: function(tweetId) {
+    $("tr[id=" + tweetId + "]").empty();
   }
 };
