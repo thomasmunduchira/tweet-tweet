@@ -1,28 +1,71 @@
-<form id="register-form">
-  <div>
-    <input type="text" id="register-username-input" class="form-control" name="username">
-    <label for="register-username-input">Username</label>
+<div class="jumbotron text-xs-center">
+  <h1 class="display-3">Tweet Tweet</h1>
+  <p class="lead">Welcome to the social network of the 22nd Century</p>
+  <hr class="my-2">
+  <button class="btn btn-primary" id="register-button" data-toggle="modal" data-target="#register-modal">Register</button>
+  <button class="btn btn-primary" id="log-in-button" data-toggle="modal" data-target="#log-in-modal">Log In</button>
+</div>
+
+<div class="modal fade" id="register-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Register</h4>
+      </div>
+      <div class="modal-body">
+        <form id="register-form">
+          <div class="form-group">
+            <label for="register-username-input" class="col-form-label">Username</label>
+            <input type="text" id="register-username-input" class="form-control" name="username">
+          </div>
+          <div class="form-group">
+            <label for="register-password-input" class="col-form-label">Password</label>
+            <input type="password" id="register-password-input" class="form-control" name="password">
+          </div>
+          <div class="form-group">
+            <label for="register-password-confirm-input" class="col-form-label">Confirm Password</label>
+            <input type="password" id="register-password-confirm-input" class="form-control" name="confirmPassword">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
-  <div>
-    <input type="password" id="register-password-input" class="form-control" name="password">
-    <label for="register-password-input">Password</label>
+</div>
+
+<div class="modal fade" id="log-in-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Log In</h4>
+      </div>
+      <div class="modal-body">
+        <form id="login-form">
+          <div class="form-group">
+            <label for="log-in-username-input" class="col-form-label">Username</label>
+            <input type="text" id="log-in-username-input" class="form-control" name="username">
+          </div>
+          <div class="form-group">
+            <label for="log-in-password-input" class="col-form-label">Password</label>
+            <input type="password" id="log-in-password-input" class="form-control" name="password">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Log in</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
-  <div>
-    <input type="password" id="register-password-confirm-input" class="form-control" name="confirmPassword">
-    <label for="register-password-confirm-input">Confirm Password</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Register</button>
-</form>
-<form id="login-form">
-  <div>
-    <input type="text" id="log-in-username-input" class="form-control" name="username">
-    <label for="log-in-username-input">Username</label>
-  </div>
-  <div>
-    <input type="password" id="log-in-password-input" class="form-control" name="password">
-    <label for="log-in-password-input">Password</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Log in</button>
-</form>
+</div>
 
 {{>footer}}
