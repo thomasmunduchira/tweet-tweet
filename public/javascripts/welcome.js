@@ -1,26 +1,20 @@
 $(document).ready(function() {
-  $("#register-button-2").on("click", function() {
-    var username = $("#register-username-input").val();
-    var password = $("#register-password-input").val();
-    var passwordConfirm = $("#register-password-confirm-input").val();
+   $('#register-form').on("submit", function(event) {
+    event.preventDefault();
     $.post({
       url: '/register',
-      data: {
-        username: username,
-        password: password,
-        passwordConfirm: passwordConfirm
-      }
+      data: $(this).serialize(),
+    }).done(function(data) {
+      window.location.href = data;
     });
   });
-  $("#log-in-button-2").on("click", function() {
-    var username = $("#log-in-username-input").val();
-    var password = $("#log-in-password-input").val();
+  $("#log-in-form").on("submit", function(event) {
+    event.preventDefault();
     $.post({
       url: '/login',
-      data: {
-        username: username,
-        password: password
-      }
+      data: $(this).serialize(),
+    }).done(function(data) {
+      window.location.href = data;
     });
   });
 });

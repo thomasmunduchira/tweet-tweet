@@ -9,14 +9,14 @@
 <div class="modal fade" id="register-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Register</h4>
-      </div>
-      <div class="modal-body">
-        <form id="register-form">
+      <form id="register-form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Register</h4>
+        </div>
+        <div class="modal-body">
           <div class="form-group">
             <label for="register-username-input" class="col-form-label">Username</label>
             <input type="text" id="register-username-input" class="form-control" name="username">
@@ -27,14 +27,14 @@
           </div>
           <div class="form-group">
             <label for="register-password-confirm-input" class="col-form-label">Confirm Password</label>
-            <input type="password" id="register-password-confirm-input" class="form-control" name="confirmPassword">
+            <input type="password" id="register-password-confirm-input" class="form-control" name="passwordConfirm">
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" id="register-button-2">Register</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="register-button-2">Register</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -42,14 +42,14 @@
 <div class="modal fade" id="log-in-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Log In</h4>
-      </div>
-      <div class="modal-body">
-        <form id="login-form">
+      <form id="log-in-form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Log In</h4>
+        </div>
+        <div class="modal-body">
           <div class="form-group">
             <label for="log-in-username-input" class="col-form-label">Username</label>
             <input type="text" id="log-in-username-input" class="form-control" name="username">
@@ -58,12 +58,12 @@
             <label for="log-in-password-input" class="col-form-label">Password</label>
             <input type="password" id="log-in-password-input" class="form-control" name="password">
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" id="log-in-button-2">Log in</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="log-in-button-2">Log in</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
