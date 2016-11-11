@@ -49,7 +49,7 @@ router.get('/logout', function(req, res) {
   res.redirect('/welcome');
 });
 
-router.get('/allTweets', function(req, res) {
+router.get('/tweets', function(req, res) {
   Tweet.find({
     user: req.user.username
   }, function(err, tweets) {
@@ -60,7 +60,7 @@ router.get('/allTweets', function(req, res) {
   });
 });
 
-router.post('/addTweet', function(req, res) {
+router.post('/tweet', function(req, res) {
   var tweet = new Tweet({
     tweetText: req.body.tweetText,
     imageSrc: req.body.imageSrc,
@@ -74,9 +74,9 @@ router.post('/addTweet', function(req, res) {
   });
 });
 
-router.post('/deleteTweet', function(req, res) {
+router.delete('/tweet/:id', function(req, res) {
   Tweet.findOneAndRemove({
-    _id: req.body.tweetId,
+    _id: req.params.id,
     user: req.user.username
   }, function(err) {
     if (err) {

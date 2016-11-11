@@ -34,7 +34,7 @@ $(document).ready(function() {
 var tweetList = {
   getAllTweets: function() {
     $.get({
-      url: '/allTweets'
+      url: '/tweets'
     }).done(function(tweets) {
       tweets.forEach(function(tweet) {
         var tweetId = tweet._id;
@@ -47,7 +47,7 @@ var tweetList = {
   },
   addTweet: function(tweetText, imageSrc) {
     $.post({
-      url: '/addTweet',
+      url: '/tweet',
       data: {
         tweetText: tweetText, 
         imageSrc: imageSrc
@@ -58,13 +58,12 @@ var tweetList = {
     });
   },
   deleteTweet: function(tweetId) {
-    $.post({
-      url: '/deleteTweet',
-      data: {
-        tweetId: tweetId
+    $.ajax({
+      url: '/tweet/' + tweetId,
+      type: 'DELETE',
+      success: function() {
+        view.deleteTweet(tweetId);
       }
-    }).done(function() {
-      view.deleteTweet(tweetId);
     });
   }
 };
