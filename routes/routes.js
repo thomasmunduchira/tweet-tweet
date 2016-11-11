@@ -33,10 +33,10 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/', 
-    failureRedirect: '/welcome', 
+  successRedirect: '/', 
+  failureRedirect: '/welcome', 
     // failureFlash: true
-}));
+  }));
 
 router.get('/logout', isAuthenticated, function(req, res) {
   req.logout();
@@ -46,7 +46,8 @@ router.get('/logout', isAuthenticated, function(req, res) {
 router.post('/addTweet', isAuthenticated, function(req, res) {
   var tweet = new Tweet({
     tweetText: req.body.tweetText,
-    imageSrc: req.body.imageSrc
+    imageSrc: req.body.imageSrc,
+    user: req.user.username
   });
   tweet.save(function(err) {
     if (err) {
@@ -58,7 +59,8 @@ router.post('/addTweet', isAuthenticated, function(req, res) {
 
 router.post('/deleteTweet', isAuthenticated, function(req, res) {
   Tweet.find({
-    _id: req.body.tweetId
+    _id: req.body.tweetId,
+    user: req.user.username
   }).remove(function(err) {
     if (err) {
       return console.error(err);
@@ -68,7 +70,9 @@ router.post('/deleteTweet', isAuthenticated, function(req, res) {
 });
 
 router.get('/allTweets', isAuthenticated, function(req, res) {
-  Tweet.find(function(err, tweets) {
+  Tweet.find({
+    user: req.user.username
+  }, function(err, tweets) {
     if (err) {
       return console.error(err);
     }
