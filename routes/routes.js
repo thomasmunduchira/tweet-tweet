@@ -35,15 +35,32 @@ router.post('/register', function(req, res) {
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/', 
   failureRedirect: '/welcome', 
-    // failureFlash: true
-  }));
+}));
 
-router.get('/logout', isAuthenticated, function(req, res) {
+router.use(function(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/welcome');
+});
+
+router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/welcome');
 });
 
-router.post('/addTweet', isAuthenticated, function(req, res) {
+router.get('/allTweets', function(req, res) {
+  Tweet.find({
+    user: req.user.username
+  }, function(err, tweets) {
+    if (err) {
+      return console.error(err);
+    }
+    res.send(tweets);
+  });
+});
+
+router.post('/addTweet', function(req, res) {
   var tweet = new Tweet({
     tweetText: req.body.tweetText,
     imageSrc: req.body.imageSrc,
@@ -57,11 +74,11 @@ router.post('/addTweet', isAuthenticated, function(req, res) {
   });
 });
 
-router.post('/deleteTweet', isAuthenticated, function(req, res) {
-  Tweet.find({
+router.post('/deleteTweet', function(req, res) {
+  Tweet.findOneAndRemove({
     _id: req.body.tweetId,
     user: req.user.username
-  }).remove(function(err) {
+  }, function(err) {
     if (err) {
       return console.error(err);
     }
@@ -69,30 +86,12 @@ router.post('/deleteTweet', isAuthenticated, function(req, res) {
   });
 });
 
-router.get('/allTweets', isAuthenticated, function(req, res) {
-  Tweet.find({
-    user: req.user.username
-  }, function(err, tweets) {
-    if (err) {
-      return console.error(err);
-    }
-    res.send(tweets);
-  });
-});
-
-router.get('/', isAuthenticated, function(req, res) {
+router.get('/', function(req, res) {
   res.render('pages/index', {
     title: 'Home',
     scriptFile: 'index.js',
     username: req.user.username
   });
 });
-
-function isAuthenticated(req, res, next) {
-  if (req.user) {
-    return next();
-  }
-  res.redirect('/welcome');
-}
 
 module.exports = router;

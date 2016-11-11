@@ -10,8 +10,6 @@ $(document).ready(function() {
         password: password,
         passwordConfirm: passwordConfirm
       }
-    }).done(function(data) {
-      console.log("Done" + data);
     });
   });
   $("#log-in-button-2").on("click", function() {
@@ -23,8 +21,6 @@ $(document).ready(function() {
         username: username,
         password: password
       }
-    }).done(function(data) {
-      console.log('Done');
     });
   });
 });
