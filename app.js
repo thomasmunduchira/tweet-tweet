@@ -4,18 +4,27 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
+var config = require('./config/config');
 var hbs = require('hbs');
-var routes = require('./routes/routes');
+var Promise = require('bluebird');
+// var flash = require('connect-flash');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:/test');
+mongoose.Promise = Promise;
+mongoose.connect(config.db.url);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
+var routes = require('./routes/routes');
+
 var app = express();
 
+var passport = require('./config/passport');
+var session = require('./config/session');
+app.use(session);
 app.use(passport.initialize());
+app.use(passport.session());
+// app.use(flash);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

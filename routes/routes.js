@@ -5,6 +5,7 @@ var User = require('../models/user');
 var Tweet = require('../models/tweet');
 var passport = require('../config/passport');
 
+/* GET home page. */
 router.get('/welcome', function(req, res) {
   res.render('pages/welcome', { 
     title: 'Welcome',
@@ -12,7 +13,37 @@ router.get('/welcome', function(req, res) {
   });
 });
 
-router.post('/addTweet', function(req, res) {
+router.post('/register', function(req, res) {
+  if (!req.body.username || !req.body.password || !req.body.passwordConfirm) {
+    return res.send('Missing one or more fields.');
+  } else if (req.body.password !== req.body.passwordConfirm) {
+    return res.send('Passwords don\'t match.');
+  }
+  User.register(new User({
+    username: req.body.username
+  }), req.body.password, function(err) {
+    if (err) {
+      if (err.name === 'UserExistsError') {
+        return res.send('Username is taken.');
+      }
+      return console.error(err);
+    }
+    res.redirect('/');
+  });
+});
+
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/', 
+    failureRedirect: '/welcome', 
+    // failureFlash: true
+}));
+
+router.get('/logout', isAuthenticated, function(req, res) {
+  req.logout();
+  res.redirect('/welcome');
+});
+
+router.post('/addTweet', isAuthenticated, function(req, res) {
   var tweet = new Tweet({
     tweetText: req.body.tweetText,
     imageSrc: req.body.imageSrc
@@ -25,7 +56,7 @@ router.post('/addTweet', function(req, res) {
   });
 });
 
-router.post('/deleteTweet', function(req, res) {
+router.post('/deleteTweet', isAuthenticated, function(req, res) {
   Tweet.find({
     _id: req.body.tweetId
   }).remove(function(err) {
@@ -36,7 +67,7 @@ router.post('/deleteTweet', function(req, res) {
   });
 });
 
-router.get('/allTweets', function(req, res) {
+router.get('/allTweets', isAuthenticated, function(req, res) {
   Tweet.find(function(err, tweets) {
     if (err) {
       return console.error(err);
@@ -45,12 +76,19 @@ router.get('/allTweets', function(req, res) {
   });
 });
 
-/* GET home page. */
-router.get('/', function(req, res) {
+router.get('/', isAuthenticated, function(req, res) {
   res.render('pages/index', {
     title: 'Home',
-    scriptFile: 'index.js'
+    scriptFile: 'index.js',
+    username: req.user.username
   });
 });
+
+function isAuthenticated(req, res, next) {
+  if (req.user) {
+    return next();
+  }
+  res.redirect('/welcome');
+}
 
 module.exports = router;

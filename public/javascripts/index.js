@@ -24,6 +24,11 @@ $(document).ready(function() {
   $("tbody").on("click", ".delete-button", function(event) {
     controllers.deleteTweet(this.id);
   });
+  $("#log-out-button").on("click", function() {
+    $.get({
+      url: '/logout'
+    });
+  });
 });
 
 var tweetList = {
@@ -46,7 +51,7 @@ var tweetList = {
       data: {
         tweetText: tweetText, 
         imageSrc: imageSrc
-      },
+      }
     }).done(function(tweetId) {
       view.addTweet(tweetId, tweetText, imageSrc);
       view.resetFocus();
