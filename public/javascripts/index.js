@@ -27,6 +27,8 @@ $(document).ready(function() {
   $("#log-out-button").on("click", function() {
     $.get({
       url: '/logout'
+    }).done(function(data) {
+      window.location.href = data;
     });
   });
 });

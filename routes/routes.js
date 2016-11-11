@@ -28,14 +28,13 @@ router.post('/register', function(req, res) {
       }
       return console.error(err);
     }
-    res.redirect('/');
   });
+  res.send('/welcome');
 });
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/', 
-  failureRedirect: '/welcome', 
-}));
+router.post('/login', passport.authenticate('local'), function(req, res) {
+  res.send('/');
+});
 
 router.use(function(req, res, next) {
   if (req.isAuthenticated()) {
@@ -46,7 +45,7 @@ router.use(function(req, res, next) {
 
 router.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('/welcome');
+  res.send('/welcome');
 });
 
 router.get('/tweets', function(req, res) {
