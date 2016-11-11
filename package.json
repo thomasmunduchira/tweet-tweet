@@ -1,14 +1,22 @@
 {
   "name": "tweet-tweet",
   "version": "0.0.0",
-  "private": true,
+  "description": "A Twitter clone built using Node.js and MongoDB.",
+  "author": "Thomas Munduchira",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomasmunduchira/tweet-tweet"
+  },
+  "bugs": {
+    "url": "https://github.com/thomasmunduchira/tweet-tweet/issues"
   },
   "dependencies": {
     "bluebird": "^3.4.6",
     "body-parser": "~1.15.2",
-    "connect-flash": "^0.1.1",
     "connect-mongo": "^1.3.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -22,5 +30,5 @@
     "passport-local-mongoose": "^4.0.0",
     "serve-favicon": "~2.3.0"
   },
-  "main": "./bin/www"
+  "private": true
 }
