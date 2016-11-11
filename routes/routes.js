@@ -49,6 +49,17 @@ router.get('/logout', function(req, res) {
   res.redirect('/welcome');
 });
 
+router.get('/allTweets', function(req, res) {
+  Tweet.find({
+    user: req.user.username
+  }, function(err, tweets) {
+    if (err) {
+      return console.error(err);
+    }
+    res.send(tweets);
+  });
+});
+
 router.post('/addTweet', function(req, res) {
   var tweet = new Tweet({
     tweetText: req.body.tweetText,
@@ -72,17 +83,6 @@ router.post('/deleteTweet', function(req, res) {
       return console.error(err);
     }
     res.send("Deleted");
-  });
-});
-
-router.get('/allTweets', function(req, res) {
-  Tweet.find({
-    user: req.user.username
-  }, function(err, tweets) {
-    if (err) {
-      return console.error(err);
-    }
-    res.send(tweets);
   });
 });
 

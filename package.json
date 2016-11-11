@@ -1,12 +1,13 @@
 {
   "name": "tweet-tweet",
   "version": "0.0.0",
-  "description": "A Twitter clone built using Node.js and MongoDB.",
+  "description": "A Twitter clone built using Node.js and MongoDB",
   "author": "Thomas Munduchira",
   "scripts": {
     "start": "nodemon ./bin/www"
   },
   "main": "app.js",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/thomasmunduchira/tweet-tweet"
