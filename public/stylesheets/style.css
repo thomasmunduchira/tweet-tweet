@@ -2,7 +2,16 @@ html {
   background: rgb(51,195,240);
 }
 
-.navbar-light {
+.jumbotron {
+  height: 80vh;
+}
+
+.modal {
+  width: 30%;
+  margin-left: 35%;
+}
+
+/*.navbar-light {
   background: rgb(51,195,240);
   color: white;
 }
@@ -10,7 +19,7 @@ html {
 .navbar-brand-custom {
   color: white;
   font-size: 2em;
-}
+}*/
 
 body {
   background: white;
