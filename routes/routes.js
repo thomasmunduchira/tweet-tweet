@@ -15,25 +15,40 @@ router.get('/welcome', function(req, res) {
 
 router.post('/register', function(req, res) {
   if (!req.body.username || !req.body.password || !req.body.passwordConfirm) {
-    return res.send('Missing one or more fields.');
+    return res.json({
+      success: false,
+      message: 'Missing one or more fields.'
+    });
   } else if (req.body.password !== req.body.passwordConfirm) {
-    return res.send('Passwords don\'t match.');
+    return res.json({
+      success: false,
+      message: 'Passwords don\'t match.'
+    });
   }
   User.register(new User({
     username: req.body.username
   }), req.body.password, function(err) {
     if (err) {
       if (err.name === 'UserExistsError') {
-        return res.send('Username is taken.');
+        return res.json({
+          success: false,
+          message: 'Username is taken.'
+        });
       }
       return console.error(err);
     }
+    res.json({
+      success: true,
+      redirect: '/welcome'
+    });
   });
-  res.send('/welcome');
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-  res.send('/');
+  res.json({
+    success: true,
+    redirect: '/'
+  });
 });
 
 router.use(function(req, res, next) {
@@ -45,7 +60,10 @@ router.use(function(req, res, next) {
 
 router.get('/logout', function(req, res) {
   req.logout();
-  res.send('/welcome');
+  res.json({
+    success: true,
+    redirect: '/welcome'
+  });
 });
 
 router.get('/tweets', function(req, res) {
@@ -55,7 +73,10 @@ router.get('/tweets', function(req, res) {
     if (err) {
       return console.error(err);
     }
-    res.send(tweets);
+    res.json({
+      success: true,
+      tweets: tweets
+    });
   });
 });
 
@@ -69,7 +90,10 @@ router.post('/tweet', function(req, res) {
     if (err) {
       return console.error(err);
     }
-    res.send(tweet._id);
+    res.json({
+      success: true,
+      tweetId: tweet._id
+    });
   });
 });
 
@@ -81,7 +105,9 @@ router.delete('/tweet/:id', function(req, res) {
     if (err) {
       return console.error(err);
     }
-    res.send("Deleted");
+    res.json({
+      success: true
+    });
   });
 });
 
