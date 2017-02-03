@@ -7,7 +7,7 @@
   "description": "A Twitter clone built using Node.js and MongoDB",
   "author": "Thomas Munduchira",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "node ./bin/www"
   },
   "main": "app.js",
   "license": "MIT",
