@@ -28,7 +28,13 @@ $(document).ready(function() {
     $.get({
       url: '/logout'
     }).done(function(data) {
-      window.location.href = data;
+      if (data.success) {
+        window.location.href = data.redirect;
+      } else {
+        console.log(data.message);
+      }
+    }).fail(function(err) {
+      console.log('Failed:', err);
     });
   });
 });
@@ -37,14 +43,20 @@ var tweetList = {
   getAllTweets: function() {
     $.get({
       url: '/tweets'
-    }).done(function(tweets) {
-      tweets.forEach(function(tweet) {
-        var tweetId = tweet._id;
-        var tweetText = tweet.tweetText;
-        var imageSrc = tweet.imageSrc;
-        view.addTweet(tweetId, tweetText, imageSrc);
-      });
-      view.resetFocus();
+    }).done(function(data) {
+      if (data.success) {
+        data.tweets.forEach(function(tweet) {
+          var tweetId = tweet._id;
+          var tweetText = tweet.tweetText;
+          var imageSrc = tweet.imageSrc;
+          view.addTweet(tweetId, tweetText, imageSrc);
+        });
+        view.resetFocus();      
+      } else {
+        console.log(data.message);
+      }
+    }).fail(function(err) {
+      console.log('Failed:', err);
     });
   },
   addTweet: function(tweetText, imageSrc) {
@@ -54,18 +66,29 @@ var tweetList = {
         tweetText: tweetText, 
         imageSrc: imageSrc
       }
-    }).done(function(tweetId) {
-      view.addTweet(tweetId, tweetText, imageSrc);
-      view.resetFocus();
+    }).done(function(data) {
+      if (data.success) {
+        view.addTweet(data.tweetId, tweetText, imageSrc);
+        view.resetFocus();
+      } else {
+        console.log(data.message);
+      }
+    }).fail(function(err) {
+      console.log('Failed:', err);
     });
   },
   deleteTweet: function(tweetId) {
     $.ajax({
       url: '/tweet/' + tweetId,
-      type: 'DELETE',
-      success: function() {
+      type: 'DELETE'
+    }).done(function(data) {
+      if (data.success) {
         view.deleteTweet(tweetId);
+      } else {
+        console.log(data.message);
       }
+    }).fail(function(err) {
+      console.log('Failed:', err);
     });
   }
 };

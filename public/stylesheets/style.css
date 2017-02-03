@@ -25,9 +25,26 @@ body {
   background: white;
 }
 
+.navbar-custom {
+  background-color: rgb(51,195,240);
+  border-radius: 0;
+  height: 4em;
+  vertical-align: middle;
+}
+
+.navbar-brand-custom {
+  font-size: 1.5em;
+  color: white !important;
+}
+
+.vertical-center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 a {
   text-decoration: none;
-  color: white;
 }
 
 th {
@@ -42,12 +59,12 @@ th {
 img {
   display: none;
   width: 300px;
-  height: auto;s
+  height: auto;
   padding: 0 0 0.5em 0;
 }
 
 #file {
-  padding: 0 0 1em 0;
+  padding-top: 0.5em;
 }
 
 .delete-button {
@@ -56,4 +73,8 @@ img {
 
 footer {
   text-align: center;
+}
+
+label[for=message] {
+  padding-top: 1em;
 }

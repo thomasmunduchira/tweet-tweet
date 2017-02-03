@@ -5,7 +5,7 @@ var config = {
     resave: false,
   },
   db: {
-    url: 'mongodb://localhost:27017/tweet-tweet',
+    url: 'mongodb://thomasmunduchira:thomasmunduchira@ds159517.mlab.com:59517/tweet-tweet',
   }
 };
 
