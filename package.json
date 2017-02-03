@@ -1,6 +1,9 @@
 {
   "name": "tweet-tweet",
   "version": "0.1.0",
+  "engines": {
+    "node": "7.4.0"
+  },
   "description": "A Twitter clone built using Node.js and MongoDB",
   "author": "Thomas Munduchira",
   "scripts": {
